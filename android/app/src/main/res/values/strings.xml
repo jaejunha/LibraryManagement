@@ -13,4 +13,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="floor">층</string>
+    <string name="room">호실</string>
 </resources>

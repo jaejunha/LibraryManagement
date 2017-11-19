@@ -1,6 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <Spinner
+        android:id="@+id/floor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@string/floor"
+        android:layout_weight="0.13" />
+
+    <Spinner
+        android:id="@+id/room"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ToggleButton
+            android:id="@+id/s1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="1"
+            android:textOff="가능"
+            android:textOn="선택" />
+
+        <ToggleButton
+            android:id="@+id/s2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="2"
+            android:textOff="가능"
+            android:textOn="선택" />
+
+        <ToggleButton
+            android:id="@+id/s3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="3"
+            android:textOff="가능"
+            android:textOn="선택" />
+
+        <ToggleButton
+            android:id="@+id/s4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="4"
+            android:textOff="가능"
+            android:textOn="선택" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ToggleButton
+            android:id="@+id/s5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="5"
+            android:textOff="가능"
+            android:textOn="선택" />
+
+        <ToggleButton
+            android:id="@+id/s6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="6"
+            android:textOff="가능"
+            android:textOn="선택" />
+
+        <ToggleButton
+            android:id="@+id/s7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="7"
+            android:textOff="가능"
+            android:textOn="선택" />
+
+        <ToggleButton
+            android:id="@+id/s8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="8"
+            android:textOff="가능"
+            android:textOn="선택" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/book"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.13"
+        android:text="예약"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="20dp"/>
+
+    <Button
+        android:id="@+id/check"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.13"
+        android:text="예약확인"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"/>
+
+    <Button
+        android:id="@+id/ret"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.13"
+        android:text="반납"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp"/>
 
 </LinearLayout>
