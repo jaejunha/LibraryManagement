@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main"
     android:weightSum="1">
 
     <Spinner
@@ -108,10 +110,11 @@
         android:id="@+id/book"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="60dp"
         android:layout_weight="0.13"
-        android:text="예약신청" />
+        android:text="예약신청"
+        android:layout_gravity="center"
+        android:background="@drawable/button_blue"/>
 
     <Button
         android:id="@+id/check"
@@ -120,8 +123,9 @@
         android:layout_weight="0.13"
         android:text="예약확인"
         android:layout_marginTop="40dp"
-        android:layout_marginLeft="20dp"
-        android:onClick=""/>
+        android:onClick=""
+        android:layout_gravity="center"
+        android:background="@drawable/button_blue"/>
 
     <Button
         android:id="@+id/ret"
@@ -130,6 +134,7 @@
         android:layout_weight="0.13"
         android:text="반납"
         android:layout_marginTop="40dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_gravity="center"
+        android:background="@drawable/button_blue"/>
 
 </LinearLayout>
