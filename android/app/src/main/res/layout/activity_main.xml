@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,15 +10,13 @@
     <Spinner
         android:id="@+id/floor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@string/floor"
-        android:layout_weight="0.13" />
+        android:layout_height="50dp"
+        android:entries="@string/floor" />
 
     <Spinner
         android:id="@+id/room"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.05" />
+        android:layout_height="50dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,7 +83,8 @@
             android:layout_weight="1"
             android:text="6"
             android:textOff="6번"
-            android:textOn="선택" />
+            android:textOn="선택"
+            android:onClick="ToggleListener"/>
 
         <ToggleButton
             android:id="@+id/s7"
@@ -106,35 +106,82 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/book"
-        android:layout_width="330dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="0.13"
-        android:text="예약신청"
-        android:layout_gravity="center"
-        android:background="@drawable/button_blue"/>
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/check"
-        android:layout_width="330dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.13"
-        android:text="예약확인"
-        android:layout_marginTop="40dp"
-        android:onClick=""
-        android:layout_gravity="center"
-        android:background="@drawable/button_blue"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.13"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/ret"
-        android:layout_width="330dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.13"
-        android:text="반납"
-        android:layout_marginTop="40dp"
-        android:layout_gravity="center"
-        android:background="@drawable/button_blue"/>
+            <ImageView
+                android:id="@+id/StuImg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:layout_marginRight="20dp"
+                app:srcCompat="@drawable/ajou_another" />
+
+            <TextView
+                android:id="@+id/StuNum"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textSize="35sp"
+                android:layout_marginTop="30dp"
+                android:text="201620894" />
+
+            <TextView
+                android:id="@+id/StuName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:text="김연교" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.13"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/book"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/button_blue"
+                android:onClick="bookListener"
+                android:text="예약 신청" />
+
+            <Button
+                android:id="@+id/check"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="45dp"
+                android:background="@drawable/button_blue"
+                android:onClick="checkListener"
+                android:text="자리 확인" />
+
+            <Button
+                android:id="@+id/ret"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="45dp"
+                android:onClick="retListener"
+                android:background="@drawable/button_blue"
+                android:text="반납" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
