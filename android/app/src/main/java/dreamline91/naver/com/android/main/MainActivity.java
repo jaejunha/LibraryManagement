@@ -1,5 +1,4 @@
 package dreamline91.naver.com.android.main;
-
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -38,11 +37,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean isBooked=false;
     public Button book;
     private ToggleButton b[];
+    public AlertDialog.Builder builder;
+    public boolean sw=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initProfile();
         initSpinner();
         initButton();
@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         b[7]=(ToggleButton) findViewById(R.id.s7);
         b[8]=(ToggleButton) findViewById(R.id.s8);
         Button check=(Button) findViewById(R.id.check);
+        book=(Button) findViewById(R.id.book);
         if(seat[0]==1)
         {
             b[1].setTextOn("예약됨");
@@ -138,53 +139,103 @@ public class MainActivity extends AppCompatActivity {
 
     public void ToggleListener(View target)
     {
-        //Alert 알람 넣기
-        MySeatNum=6;
-        b[6].setTextColor(Color.parseColor("#ffFF6000"));
-        b[6].setEnabled(false);
-        isSeated=true;
-        Toast.makeText(getApplication(),"배정되었습니다",Toast.LENGTH_LONG).show();
-        //라즈베리파이에 신호 보내기
+        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("확인")
+        .setMessage("정말 선택하시겠습니까?")
+            .setCancelable(false)
+            .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    MySeatNum=6;
+                    b[6].setTextColor(Color.parseColor("#ffFF6000"));
+                    isSeated=true;
+                    b[6].setEnabled(false);
+                    Toast.makeText(getApplication(),"배정되었습니다",Toast.LENGTH_SHORT).show();
+                    //라즈베리파이에 신호 보내기
+                }
+            })
+            .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    b[6].setChecked(false);
+                    dialog.cancel();
+                }
+            }).show();
+
     }
     public void bookListener(View target)
     {
-        if(isBooked==false) {
-            //Alert 알람 넣기
-            isBooked = true;
-            Toast.makeText(getApplication(), "예약되었습니다", Toast.LENGTH_LONG).show();
-            book.setText("예약 취소");
-            //라즈베리파이에 신호 보내기
+        if(isSeated==true)
+        {
+            Toast.makeText(getApplication(),"이미 배정된 자리가 있습니다",Toast.LENGTH_SHORT).show();
+        }
+        else if(isBooked==false) {
+            AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("확인")
+                    .setMessage("정말 예약하시겠습니까?")
+                    .setCancelable(false)
+                    .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            isBooked = true;
+                            Toast.makeText(getApplication(),"예약되었습니다",Toast.LENGTH_SHORT).show();
+                            book.setText("예약 취소");
+                            //라즈베리파이에 신호 보내기
+                        }
+                    })
+                    .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    }).show();
+
         }
         else if(isBooked==true)
         {
-            //Alert 알람 넣기
-            isBooked=false;
-            Toast.makeText(getApplication(), "예약 취소되었습니다", Toast.LENGTH_LONG).show();
-            book.setText("예약 신청");
-            //라즈베리파이에 신호 보내기
+            AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("확인")
+                    .setMessage("정말 취소하시겠습니까?")
+                    .setCancelable(false)
+                    .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            isBooked=false;
+                            Toast.makeText(getApplication(), "예약 취소되었습니다", Toast.LENGTH_SHORT).show();
+                            book.setText("예약 신청");
+                            //라즈베리파이에 신호 보내기
+                        }
+                    })
+                    .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    }).show();
         }
     }
     public void checkListener(View target)
     {
         if(isBooked==true)
         {
-            Toast.makeText(getApplication(),"예약대기 중입니다.",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(),"예약대기 중입니다.",Toast.LENGTH_SHORT).show();
         }
         else if(isSeated==true)
         {
             String text=MySeatFloor+"층 "+MySeatRoom+"호실 "+MySeatNum+"번 자리입니다.";
-            Toast.makeText(getApplication(),text,Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(),text,Toast.LENGTH_SHORT).show();
+        }
+        else if(isSeated==false)
+        {
+            Toast.makeText(getApplication(),"배정된 자리가 없습니다.",Toast.LENGTH_SHORT).show();
         }
     }
     public void retListener(View target)
     {
         if(isSeated==false)
         {
-            Toast.makeText(getApplication(),"배정된 자리가 없습니다.",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(),"배정된 자리가 없습니다.",Toast.LENGTH_SHORT).show();
         }
         else if(isSeated==true)
         {
-            Toast.makeText(getApplication(),"좌석 반납되었습니다.",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(),"좌석 반납되었습니다.",Toast.LENGTH_SHORT).show();
+            b[6].setChecked(false);
+            b[6].setTextColor(Color.parseColor("#ffffff"));
+            b[6].setEnabled(true);
             isSeated=false;
         }
 
