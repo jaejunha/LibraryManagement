@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,7 +20,27 @@ import java.util.ArrayList;
 
 import dreamline91.naver.com.android.R;
 import dreamline91.naver.com.android.util.connection.Ajou;
+import dreamline91.naver.com.android.util.object.AE;
+import dreamline91.naver.com.android.util.object.CSEBase;
 import dreamline91.naver.com.android.util.object.User;
+
+import org.eclipse.paho.android.service.MqttAndroidClient;
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.*;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by dream on 2017-11-15.
@@ -39,15 +60,66 @@ public class MainActivity extends AppCompatActivity {
     private ToggleButton b[];
     public AlertDialog.Builder builder;
     public boolean sw=false;
+
+
+    private static CSEBase csebase=new CSEBase();
+    private static AE ae= new AE();
+    private static String TAG="MainActivity";
+    private String MQTTPORT="1883";
+    private String ServiceAEName="ae-edu11111";
+    private String MQTT_Req_Topic="";
+    private String MQTT_Resp_Topic="";
+    private MqttAndroidClient mqttClient = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        GetAEInfo();
         initProfile();
         initSpinner();
         initButton();
     }
-
+    public void GetAEInfo() {
+        csebase.setInfo("192.168.25.11","7579","mobius-yt","1883");
+        //csebase.setInfo("203.253.128.151","7579","mobius-yt","1883");
+        // AE Create for Android AE
+        ae.setAppName("ae-eud11111");
+        aeCreateRequest aeCreate = new aeCreateRequest();
+        aeCreate.setReceiver(new IReceived() {
+            public void getResponseBody(final String msg) {
+                handler.post(new Runnable() {
+                    public void run() {
+                        Log.d(TAG, "** AE Create ResponseCode[" + msg +"]");
+                        if( Integer.parseInt(msg) == 201 ){
+                            MQTT_Req_Topic = "/oneM2M/req/mobius-yt/"+ae.getAEid()+"_sub"+"/#";
+                            MQTT_Resp_Topic = "/oneM2M/resp/mobius-yt/"+ae.getAEid()+"_sub"+"/xml";
+                            //Log.d(TAG, "RTopic["+ MQTT_Req_Topic+"]");
+                            //Log.d(TAG, "ResTopic["+ MQTT_Resp_Topic+"]");
+                        }
+                        else { // If AE is Exist , GET AEID
+                            aeRetrieveRequest aeRetrive = new aeRetrieveRequest();
+                            aeRetrive.setReceiver(new IReceived() {
+                                public void getResponseBody(final String resmsg) {
+                                    handler.post(new Runnable() {
+                                        public void run() {
+                                            Log.d(TAG, "** AE Retrive ResponseCode[" + resmsg +"]");
+                                            MQTT_Req_Topic = "/oneM2M/req/mobius-yt/"+ae.getAEid()+"_sub"+"/#";
+                                            MQTT_Resp_Topic = "/oneM2M/resp/mobius-yt/"+ae.getAEid()+"_sub"+"/xml";
+                                            //Log.d(TAG, "RTopic["+ MQTT_Req_Topic+"]");
+                                            //Log.d(TAG, "ResTopic["+ MQTT_Resp_Topic+"]");
+                                        }
+                                    });
+                                }
+                            });
+                            aeRetrive.start();
+                        }
+                    }
+                });
+            }
+        });
+        aeCreate.start();
+    }
     private void initProfile() {
         String cookie = getIntent().getStringExtra("Cookie");
         Ajou ajou = new Ajou();
