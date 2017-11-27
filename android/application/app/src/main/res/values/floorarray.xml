@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="floor">
+        <item>1층</item>
+        <item>2층</item>
+        <item>3층</item>
+    </string-array>
+    <string-array name="room">
+        <item>1호실</item>
+        <item>2호실</item>
+        <item>3호실</item>
+    </string-array>
+</resources>

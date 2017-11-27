@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\dream\.android\build-cache\52470ebb1a409a2858b8b2c075894304a41292cc\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="6a022bf00ccd0948a8180c505e8e458bbddd43a6">
+        <dex dex="D:\GitHub\LibraryManagement\android\app\build\intermediates\pre-dexed\debug\classes_6df259635bfeb3fb74ccf4b3e872bc694fd9d1c4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\dream\.android\build-cache\3fd7c8e7032604a266be2b61763a5b2d2b8bc81c\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="cddcd0fb93bc70e27325f2f715b2710332004ebb">
+        <dex dex="D:\GitHub\LibraryManagement\android\app\build\intermediates\pre-dexed\debug\classes_589267fd48e2713fb3d906c84efa5229033c6e85.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\dream\.android\build-cache\8d3e4a125df9237822b0b65ca429e977c36a234e\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.1"
+        sha1="c4f45092eee6cdf1a5dbd597b2b6819be652ce2e">
+        <dex dex="D:\GitHub\LibraryManagement\android\app\build\intermediates\pre-dexed\debug\classes_e76e701d3f65219f609389ee4371a015de8e8c4f.jar" />
+    </item>
+
+</items>

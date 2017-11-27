@@ -1,10 +1,10 @@
 {
     "useprotocol": "http",
     "cse": {
-        "cbhost": "192.168.1.10",
-        "cbport": "7579",
-        "cbname": "mobius-yt",
-        "cbcseid": "/mobius-yt",
+        "cbhost": "localhost",
+        "cbport": "7575",
+        "cbname": "rosemary",
+        "cbcseid": "/rosemary",
         "mqttport": "1883"
     },
     "ae": {
@@ -23,13 +23,17 @@
         {
             "parentpath": "/ae-edu0",
             "ctname": "cnt-led"
+        },
+        {
+            "parentpath": "/ae-edu0",
+            "ctname": "cnt-ir"
         }
     ],
     "sub": [
         {
             "parentpath": "/ae-edu0/cnt-led",
             "subname": "sub-ctrl",
-            "nu": "mqtt://192.168.1.10/ae-edu0"
+            "nu": "mqtt://localhost/S20170605061319812vQZM-1"
         }
     ]
 }
