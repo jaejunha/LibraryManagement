@@ -1,7 +1,0 @@
-#Sat Nov 25 22:58:21 KST 2017
-base.0=C\:\\Users\\KYG\\Desktop\\And\\LibraryManagement\\android\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_39b784ddb96e2ce554f078998d62839e3b3f4b45
-renamed.1=classes.dex
-renamed.0=classes2.dex
-file.1=C\:\\Users\\KYG\\Desktop\\And\\LibraryManagement\\android\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_212d02c483e45b8702088bfdb7740163f43aaab2\\classes.dex
-base.1=C\:\\Users\\KYG\\Desktop\\And\\LibraryManagement\\android\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_212d02c483e45b8702088bfdb7740163f43aaab2
-file.0=C\:\\Users\\KYG\\Desktop\\And\\LibraryManagement\\android\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_39b784ddb96e2ce554f078998d62839e3b3f4b45\\classes.dex

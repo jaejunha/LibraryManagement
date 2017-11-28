@@ -4,9 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,32 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 import dreamline91.naver.com.android.R;
 import dreamline91.naver.com.android.util.connection.Ajou;
-import dreamline91.naver.com.android.util.object.AE;
-import dreamline91.naver.com.android.util.object.CSEBase;
 import dreamline91.naver.com.android.util.object.User;
-
-import org.eclipse.paho.android.service.MqttAndroidClient;
-import org.eclipse.paho.client.mqttv3.IMqttActionListener;
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.IMqttToken;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.*;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by dream on 2017-11-15.
@@ -58,84 +33,40 @@ public class MainActivity extends AppCompatActivity {
     public boolean isBooked=false;
     public Button book;
     private ToggleButton b[];
-    public AlertDialog.Builder builder;
-    public boolean sw=false;
-
-
-    private static CSEBase csebase=new CSEBase();
-    private static AE ae= new AE();
-    private static String TAG="MainActivity";
-    private String MQTTPORT="1883";
-    private String ServiceAEName="ae-edu11111";
-    private String MQTT_Req_Topic="";
-    private String MQTT_Resp_Topic="";
-    private MqttAndroidClient mqttClient = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        GetAEInfo();
         initProfile();
         initSpinner();
         initButton();
     }
-    public void GetAEInfo() {
-        csebase.setInfo("192.168.25.11","7579","mobius-yt","1883");
-        //csebase.setInfo("203.253.128.151","7579","mobius-yt","1883");
-        // AE Create for Android AE
-        ae.setAppName("ae-eud11111");
-        aeCreateRequest aeCreate = new aeCreateRequest();
-        aeCreate.setReceiver(new IReceived() {
-            public void getResponseBody(final String msg) {
-                handler.post(new Runnable() {
-                    public void run() {
-                        Log.d(TAG, "** AE Create ResponseCode[" + msg +"]");
-                        if( Integer.parseInt(msg) == 201 ){
-                            MQTT_Req_Topic = "/oneM2M/req/mobius-yt/"+ae.getAEid()+"_sub"+"/#";
-                            MQTT_Resp_Topic = "/oneM2M/resp/mobius-yt/"+ae.getAEid()+"_sub"+"/xml";
-                            //Log.d(TAG, "RTopic["+ MQTT_Req_Topic+"]");
-                            //Log.d(TAG, "ResTopic["+ MQTT_Resp_Topic+"]");
-                        }
-                        else { // If AE is Exist , GET AEID
-                            aeRetrieveRequest aeRetrive = new aeRetrieveRequest();
-                            aeRetrive.setReceiver(new IReceived() {
-                                public void getResponseBody(final String resmsg) {
-                                    handler.post(new Runnable() {
-                                        public void run() {
-                                            Log.d(TAG, "** AE Retrive ResponseCode[" + resmsg +"]");
-                                            MQTT_Req_Topic = "/oneM2M/req/mobius-yt/"+ae.getAEid()+"_sub"+"/#";
-                                            MQTT_Resp_Topic = "/oneM2M/resp/mobius-yt/"+ae.getAEid()+"_sub"+"/xml";
-                                            //Log.d(TAG, "RTopic["+ MQTT_Req_Topic+"]");
-                                            //Log.d(TAG, "ResTopic["+ MQTT_Resp_Topic+"]");
-                                        }
-                                    });
-                                }
-                            });
-                            aeRetrive.start();
-                        }
-                    }
-                });
-            }
-        });
-        aeCreate.start();
-    }
+
     private void initProfile() {
         String cookie = getIntent().getStringExtra("Cookie");
-        Ajou ajou = new Ajou();
-        User user =  ajou.printUser(cookie);
+        final Ajou ajou = new Ajou();
+        final User user =  ajou.printUser(cookie);
 
-        ImageView imagePicture = (ImageView) findViewById(R.id.StuImg);
-        TextView textName = (TextView) findViewById(R.id.StuName);
-        TextView textNumber = (TextView) findViewById(R.id.StuNum);
-        TextView textMajor = (TextView) findViewById(R.id.StuMajor);
+        final ImageView imagePicture = (ImageView) findViewById(R.id.StuImg);
+        final TextView textName = (TextView) findViewById(R.id.StuName);
+        final TextView textNumber = (TextView) findViewById(R.id.StuNum);
+        final TextView textMajor = (TextView) findViewById(R.id.StuMajor);
 
-        if(user.getNumber()!=0) {
-            imagePicture.setImageBitmap(ajou.printPicture(user.getNumber()));
-            textName.setText(user.getName());
-            textMajor.setText(user.getMajor());
-            textNumber.setText(user.getNumber()+"");
-        }
+        imagePicture.post(new Runnable() {
+            @Override
+            public void run() {
+                int image_height = imagePicture.getHeight();
+                imagePicture.getLayoutParams().height = image_height;
+                if(user.getNumber()!=0) {
+                    imagePicture.setImageBitmap(ajou.printPicture(user.getNumber(),image_height));
+                    textName.setText(user.getName());
+                    textMajor.setText(user.getMajor());
+                    textNumber.setText(user.getNumber()+"");
+                }
+            }
+        });
+
     }
 
     private void initSpinner() {
@@ -310,6 +241,5 @@ public class MainActivity extends AppCompatActivity {
             b[6].setEnabled(true);
             isSeated=false;
         }
-
     }
 }

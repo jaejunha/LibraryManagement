@@ -5,187 +5,125 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main"
-    android:weightSum="1">
-
-    <Spinner
-        android:id="@+id/floor"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:entries="@string/floor" />
-
-    <Spinner
-        android:id="@+id/room"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
+    android:weightSum="3">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ToggleButton
-            android:id="@+id/s1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checked="false"
-            android:text="1"
-            android:textOff="1번"
-            android:textOn="선택" />
-
-        <ToggleButton
-            android:id="@+id/s2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="2"
-            android:textOff="2번"
-            android:textOn="선택" />
-
-        <ToggleButton
-            android:id="@+id/s3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="3"
-            android:textOff="3번"
-            android:textOn="선택" />
-
-        <ToggleButton
-            android:id="@+id/s4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="4"
-            android:textOff="4번"
-            android:textOn="선택" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ToggleButton
-            android:id="@+id/s5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="5"
-            android:textOff="5번"
-            android:textOn="선택" />
-
-        <ToggleButton
-            android:id="@+id/s6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="6"
-            android:textOff="6번"
-            android:textOn="선택"
-            android:onClick="ToggleListener"/>
-
-        <ToggleButton
-            android:id="@+id/s7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="7"
-            android:textOff="7번"
-            android:textOn="선택" />
-
-        <ToggleButton
-            android:id="@+id/s8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="8"
-            android:textOff="8번"
-            android:textOn="선택" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.13"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="20dp"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.13"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/StuImg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
 
-            <ImageView
-                android:id="@+id/StuImg"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:layout_marginRight="20dp"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/StuNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/StuNum"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:textSize="35sp"
-                android:layout_marginTop="30dp" />
+                <TextView
+                    android:id="@+id/StuName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/StuName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="30sp"
-                android:text="김연교" />
+                <TextView
+                    android:id="@+id/StuMajor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:textSize="20dp"/>
 
-            <TextView
-                android:id="@+id/StuMajor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="30sp"/>
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="bottom|right"
+                    android:text="Ajou\nLMSystem"/>
+            </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <Spinner
+                android:id="@+id/floor"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:foregroundTint="@color/darkGray"
+                android:entries="@string/floor" />
+
+        <Spinner
+            android:id="@+id/room"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.13"
+            android:foregroundTint="@color/darkGray"
+            android:layout_height="50dp" />
+        <include layout="@layout/toggle_seat"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <Button
+                android:layout_margin="5dp"
                 android:id="@+id/book"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="60dp"
                 android:background="@drawable/button_blue"
                 android:onClick="bookListener"
                 android:text="예약 신청" />
 
             <Button
+                android:layout_margin="5dp"
                 android:id="@+id/check"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="45dp"
                 android:background="@drawable/button_blue"
                 android:onClick="checkListener"
                 android:text="자리 확인" />
 
             <Button
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="retListener"
+                android:background="@drawable/button_blue"
+                android:text="전등 / 환기" />
+
+            <Button
+                android:layout_margin="5dp"
                 android:id="@+id/ret"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="45dp"
                 android:onClick="retListener"
                 android:background="@drawable/button_blue"
                 android:text="반납" />
-        </LinearLayout>
 
     </LinearLayout>
-
 </LinearLayout>

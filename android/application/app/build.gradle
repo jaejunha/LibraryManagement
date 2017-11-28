@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "dreamline91.naver.com.android"
         minSdkVersion 14
@@ -27,6 +27,4 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
     testCompile 'junit:junit:4.12'
-    compile project(':org.eclipse.paho.android.service-1.1.1')
-    compile project(':org.eclipse.paho.client.mqttv3-1.1.1')
 }

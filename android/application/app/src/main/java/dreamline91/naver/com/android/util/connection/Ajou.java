@@ -77,10 +77,11 @@ public class Ajou {
         return user;
     }
 
-    public Bitmap printPicture(int number) {
+    public Bitmap printPicture(int number, int size) {
         try {
             getSimple(new URL(LIBAPP+REQUEST_PICTURE+number),"");
-            return BitmapFactory.decodeStream(new BufferedInputStream(makeConnection(new URL(LIBAPP+GET_PICTURE+number+".jpg")).getInputStream()));
+            Bitmap bitmap = BitmapFactory.decodeStream(new BufferedInputStream(HTTP.makeConnection(new URL(LIBAPP+GET_PICTURE+number+".jpg")).getInputStream()));
+            return Bitmap.createScaledBitmap(bitmap, size,size, true);
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -91,23 +92,9 @@ public class Ajou {
         return null;
     }
 
-    private HttpURLConnection makeConnection(URL url) {
-        HttpURLConnection con;
-        try {
-            con = (HttpURLConnection) url.openConnection();
-            con.setRequestProperty("Accept-Language", "ko-kr,ko;q=0.8,en-us;q=0.5,en;q=0.3");
-            con.setRequestProperty("Accept-Upgrade-Insecure-Requests", "1");
-            return con;
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     private String postLogin(URL url, String id, String pwd) {
         try {
-            HttpURLConnection con = makeConnection(url);
+            HttpURLConnection con = HTTP.makeConnection(url);
             con.setDoOutput(true);
             con.setRequestMethod("POST");
             OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
@@ -129,7 +116,7 @@ public class Ajou {
 
     private BufferedReader getSimple(URL url, String cookie) {
         try {
-            HttpURLConnection con = makeConnection(url);
+            HttpURLConnection con = HTTP.makeConnection(url);
             con.setDoOutput(false);
 
             if(cookie.equals("") == false)
