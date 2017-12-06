@@ -27,7 +27,11 @@
         {
             "parentpath": "/ae-edu0",
             "ctname": "cnt-ir"
-        }
+        },
+	{
+	    "parentpath": "/ae-edu0",
+	    "ctname": "cnt-uw"
+	}
     ],
     "sub": [
         {
