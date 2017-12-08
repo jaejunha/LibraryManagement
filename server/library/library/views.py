@@ -15,7 +15,7 @@ port = '7579'
 def postURL(cnt, con):
 	url = 'http://'+ip+':'+port+'/rosemary/ae-edu0/'+cnt
 	headers = {'Content-Type': 'application/vnd.onem2m-res+xml;ty=4', 'Accept':'application/xml', 'X-M2M-Origin':'SRosemary', 'X-M2M-RI':'12345'}
-	data = '<?xml version="1.0" encoding="UTF-8"?><m2m:cin xmlns:m2m="http://www.onem2m.org/xml/protocols" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><cnf>text</cnf><con>+con+</con></m2m:cin>'
+	data = '<?xml version="1.0" encoding="UTF-8"?><m2m:cin xmlns:m2m="http://www.onem2m.org/xml/protocols" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><cnf>text</cnf><con>'+con+'</con></m2m:cin>'
 	requests.post(url, headers=headers, data=data)
 
 def getURL(cnt):
@@ -24,11 +24,11 @@ def getURL(cnt):
 	response = requests.get(url, headers=headers)
 	return {'response':response.text}
 
-def postLED(request):
+def postSerial(request):
 
 	#sensor <- Thyme <- Rosemary <- Mobius <- Server
 	con = request.GET.get('con',0)
-	postURL('cnt-led',con)
+	postURL('cnt-serial',con)
 	return render(request,'library/print.html')
 
 def getCO2(request):
@@ -48,3 +48,6 @@ def getIR(request):
 	#sensor -> Thyme -> Rosemary -> Mobius -> Server
 	context = getURL('cnt-ir')
 	return render(request,'library/print.html',context)
+
+def test(request):
+	return render(request,'library/print.html')

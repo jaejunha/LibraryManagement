@@ -18,7 +18,7 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    url(r'^postLED', views.postLED, name='postLED'),
+    url(r'^postSerial', views.postSerial, name='postSerial'),
     url(r'^getCO2', views.getCO2, name='getCO2'),
     url(r'^getUW', views.getUW, name='getUW'),
     url(r'^getIR', views.getUW, name='getIR'),

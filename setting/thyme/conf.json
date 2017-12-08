@@ -22,20 +22,20 @@
         },
         {
             "parentpath": "/ae-edu0",
-            "ctname": "cnt-led"
+            "ctname": "cnt-serial"
         },
         {
             "parentpath": "/ae-edu0",
             "ctname": "cnt-ir"
         },
-	{
-	    "parentpath": "/ae-edu0",
-	    "ctname": "cnt-uw"
-	}
+        {
+            "parentpath": "/ae-edu0",
+            "ctname": "cnt-uw"
+        }
     ],
     "sub": [
         {
-            "parentpath": "/ae-edu0/cnt-led",
+            "parentpath": "/ae-edu0/cnt-serial",
             "subname": "sub-ctrl",
             "nu": "mqtt://localhost/S20170605061319812vQZM-1"
         }
