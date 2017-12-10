@@ -30,7 +30,7 @@ void setup() {
         pinMode(greenPin2, OUTPUT);
         
         
-	servoStatus = 90;
+	servoStatus = 0;
         rgbStatus = 0;	
         servo.write(servoStatus);
         analogWrite(bluePin, rgbStatus);
@@ -45,7 +45,7 @@ void loop() {
 	if(Serial.available()){
 	        buffer = Serial.readString();
                 if(buffer == "init"){
-                        servoStatus = 90;
+                        servoStatus = 0;
                         rgbStatus = 0;	
         		servo.write(servoStatus);
         		analogWrite(bluePin, rgbStatus);
