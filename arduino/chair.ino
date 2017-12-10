@@ -8,9 +8,9 @@ const int port = 3105;
 
 WiFiClient client;
 
-int irIn = 14;//D5, Sig
+int irIn = 13;//D7, Sig
 int uwIn = 12;//D6, Echo
-int uwOut = 13;//D7, Trig
+int uwOut = 14;//D5, Trig
 
 int irStatus;
 long uwTime;
@@ -48,7 +48,7 @@ void loop() {
     Serial.println("succeed connection");
     
     for(int i=0;i<4;i++){
-      delay(200);
+      delay(100);
       irStatus = digitalRead(irIn);
       sprintf(buffer,"{\"ctname\":\"cnt-ir\",\"con\":%d}", irStatus);
       Serial.println(buffer);

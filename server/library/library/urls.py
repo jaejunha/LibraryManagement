@@ -21,6 +21,8 @@ urlpatterns = [
     url(r'^postSerial', views.postSerial, name='postSerial'),
     url(r'^getCO2', views.getCO2, name='getCO2'),
     url(r'^getUW', views.getUW, name='getUW'),
-    url(r'^getIR', views.getUW, name='getIR'),
+    url(r'^getIR', views.getIR, name='getIR'),
+    url(r'^useSeat', views.useSeat, name='useSeat'),
+    url(r'^setTimer', views.setTimer, name='setTimer'),
     url(r'^test', views.test, name='test'),
 ]

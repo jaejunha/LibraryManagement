@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
-import datetime
 
-class Library(models.Model):
+class Area(models.Model):
     zone = models.CharField(max_length=5)
     open = models.IntegerField()
     def __str__(self):
@@ -11,15 +10,14 @@ class Library(models.Model):
 
 class Student(models.Model):
     id = models.IntegerField(primary_key=True)
+    status = models.CharField(max_length=10, default='no use')
     def __str__(self):
         return self.id
 
 class Seat(models.Model):
     no = models.IntegerField()
-    libraryZone = models.ForeignKey(Library, on_delete=models.CASCADE)
+    AreaZone = models.ForeignKey(Area, on_delete=models.CASCADE)
     use = models.IntegerField()
-    studentID = models.ForeignKey(Student, on_delete=models.CASCADE)
-    time = models.DateTimeField(default=datetime.datetime.now)
-    class Meta:
-        unique_together = (('no', 'libraryZone'),)
+    studentID = models.ForeignKey(Student, null=True)
+    time = models.IntegerField(default=900)
 
