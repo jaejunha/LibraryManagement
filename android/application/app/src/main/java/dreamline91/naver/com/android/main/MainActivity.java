@@ -1,7 +1,12 @@
 package dreamline91.naver.com.android.main;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -40,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonBook;
     private ToggleButton toggleButtons[];
     private Spinner spinnerFloor, spinnerRoom;
+
+    private int timer;
 
     private Alarm alarm;
 
@@ -276,13 +283,17 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(isSeated==true)
         {
-            String text=MySeatFloor+"층 "+MySeatRoom+"호실 "+MySeatNum+"번 자리입니다.";
+            String text="잔여시간 "+timer/60+"분 "+timer%60+"초 남았습니다";
             Toast.makeText(getApplication(),text,Toast.LENGTH_SHORT).show();
         }
-        else if(isSeated==false)
+        else
         {
-            Toast.makeText(getApplication(),"배정된 자리가 없습니다.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplication(),"예약을 먼저 해주세요.",Toast.LENGTH_SHORT).show();
         }
+    }
+    public void controlListener(View target) {
+        startActivity(new Intent(this, ControlActivity.class));
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
     public void retListener(View target)
     {
@@ -292,11 +303,25 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(isSeated==true)
         {
+
+            NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(this)
+                    .setContentText("자리가 반납되었습니다")
+                    .setTicker("자리 반납")
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
+                    .setContentTitle("알림").setAutoCancel(true);
+            NotificationManager nManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            nManager.notify(1,nBuilder.build());
             Toast.makeText(getApplication(),"좌석 반납되었습니다.",Toast.LENGTH_SHORT).show();
-            toggleButtons[6].setChecked(false);
-            toggleButtons[6].setTextColor(Color.parseColor("#ffffff"));
-            toggleButtons[6].setEnabled(true);
-            isSeated=false;
+            if(queue[MySeatFloor*3+MySeatRoom][MySeatNum] == 0)
+                seat[MySeatFloor*3+MySeatRoom][MySeatNum] = 0;
+            MySeatNum = -1;
+            if(select!=-1) {
+                toggleButtons[select].setChecked(false);
+                select = -1;
+            }
+            alarm.setCancel(true);
+            //노티피케이션
         }
     }
     public void setSeat(int i,int j,int value){
@@ -305,4 +330,8 @@ public class MainActivity extends AppCompatActivity {
     public void setIsSeated(boolean isSeated){
         this.isSeated = isSeated;
     }
+    public void setIsBooked(boolean isBooked){this.isBooked = isBooked;}
+    public void setButtonBook(String text){this.buttonBook.setText(text);}
+    public void setTimer(int timer){this.timer = timer;}
+
 }

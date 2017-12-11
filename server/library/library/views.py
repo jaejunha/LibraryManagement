@@ -97,9 +97,19 @@ def setTimer(request):
 	print 'remain: '+remain
 	return render(request,'library/print.html')
 
+def getTimer(request):
+	seat = request.GET.get('seat','')
+	a = Area.objects.get(zone=seat[0])
+	s = Seat.objects.filter(AreaZone=a,no=seat[1])
+	remain = s[0].time
+	
+	return render(request,'library/print.html',{"response":remain})
+
 def init(request):
-	a = Area.objects.get(zone='A')
-	Seat.objects.filter(AreaZone=a,no='0').delete()
+	seat = request.GET.get('seat','')
+	print seat
+	a = Area.objects.get(zone=seat[0])
+	Seat.objects.filter(AreaZone=a,no=seat[1]).delete()
 	return render(request,'library/print.html')
 
 def test(request):

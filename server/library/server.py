@@ -7,7 +7,7 @@ remain = 900
 using = 0
 
 con_web = httplib.HTTPConnection("localhost:8888")
-con_web.request("GET", "/init","",headers)
+con_web.request("GET", "/init?seat=A0","",headers)
 con_web.getresponse()
 print('server is running')
 while True:

@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^useSeat', views.useSeat, name='useSeat'),
     url(r'^checkSeat', views.checkSeat, name='checkSeat'),
     url(r'^setTimer', views.setTimer, name='setTimer'),
+    url(r'^getTimer', views.getTimer, name='getTimer'),
     url(r'^init', views.init, name='init'),
     url(r'^test', views.test, name='test'),
 ]
