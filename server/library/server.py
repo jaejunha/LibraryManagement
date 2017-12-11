@@ -24,7 +24,7 @@ while True:
 					using = 1
 					print 'remain: '+str(remain)
 			if using == 1:
-				if int(ir) == 1:
+				if int(ir) >= 1:
 					remain = 900
 					con_web.request("GET", "/setTimer?seat=A0&remain="+str(remain),"",headers)
 					con_web.getresponse()

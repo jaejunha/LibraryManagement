@@ -16,13 +16,16 @@ int irStatus;
 long uwTime;
 long uwValue;
 
+int irCount;
+int minUw;
+
 char buffer[100];
 
 void setup() {
   WiFi.disconnect(true);
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
+    delay(100);
     Serial.print(".");
   }
   Serial.println("WiFi connected");
@@ -47,20 +50,27 @@ void loop() {
     }
     Serial.println("succeed connection");
     
-    for(int i=0;i<4;i++){
-      delay(100);
-      irStatus = digitalRead(irIn);
-      sprintf(buffer,"{\"ctname\":\"cnt-ir\",\"con\":%d}", irStatus);
+    for(int i=0, irCount =0, minUw=999;i<4;i++){
+      
+      for(int i=0;i<10;i++){
+        delay(100);
+        irStatus = digitalRead(irIn);
+        irCount+=irStatus;
+        
+        digitalWrite(uwOut,HIGH); 
+        delayMicroseconds(10); 
+        digitalWrite(uwOut,LOW);
+        uwTime = pulseIn(uwIn,HIGH);
+        uwValue = (uwTime/29/2);
+        if(minUw>uwValue)
+          minUw = uwValue;
+      }
+      
+      sprintf(buffer,"{\"ctname\":\"cnt-ir\",\"con\":%d}", irCount);
       Serial.println(buffer);
       client.print(buffer);
-      
-      digitalWrite(uwOut,HIGH); 
-      delayMicroseconds(10); 
-      digitalWrite(uwOut,LOW);
-  
-      uwTime = pulseIn(uwIn,HIGH);
-      uwValue = (uwTime/29/2);
-      sprintf(buffer,"{\"ctname\":\"cnt-uw\",\"con\":%ld}", uwValue);
+
+      sprintf(buffer,"{\"ctname\":\"cnt-uw\",\"con\":%ld}", minUw);
       Serial.println(buffer);
       client.print(buffer);
   
