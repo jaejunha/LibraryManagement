@@ -21,3 +21,7 @@ class Seat(models.Model):
     studentID = models.ForeignKey(Student, null=True)
     time = models.IntegerField(default=900)
 
+class Queue(models.Model):
+    no = models.IntegerField()
+    QueSeat = models.ForeignKey(Seat, on_delete=models.CASCADE)
+    studentID = models.ForeignKey(Student, null=True)

@@ -16,6 +16,7 @@ import android.widget.ToggleButton;
 
 import dreamline91.naver.com.android.R;
 import dreamline91.naver.com.android.util.connection.Ajou;
+import dreamline91.naver.com.android.util.connection.Alarm;
 import dreamline91.naver.com.android.util.object.User;
 
 /**
@@ -27,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private int[][] seat={{0,1,1,1,1,0,1,1,0,1,1,1},{1,0,0,1,1,1,1,1,1,1,1,0},{0,1,1,1,1,1,1,1,1,1,0,1},
             {0,1,0,1,0,1,1,0,0,1,1,0},{0,1,1,1,1,0,1,1,0,1,1,1},{1,0,0,1,1,1,1,1,1,1,1,0},
             {0,1,1,1,1,1,1,1,1,1,0,1},{0,1,1,1,1,0,1,1,0,1,1,1},{1,0,0,1,1,1,1,1,1,1,1,0}};
+    private int[][] queue={{0,1,2,1,3,0,1,1,0,1,1,2},{1,0,0,2,1,1,2,1,1,2,1,0},{0,1,2,1,1,1,2,1,3,1,0,2},
+            {0,1,0,1,0,2,1,0,0,1,2,0},{0,1,1,2,1,0,1,1,0,1,2,1},{1,0,0,2,1,2,1,3,1,4,1,0},
+            {0,1,1,2,1,2,1,1,1,2,0,1},{0,1,1,2,1,0,1,1,0,1,2,1},{1,0,0,1,1,1,2,1,2,1,1,0}};
     private int MySeatFloor=0;
     private int MySeatRoom=0;
     private int MySeatNum=-1;
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonBook;
     private ToggleButton toggleButtons[];
     private Spinner spinnerFloor, spinnerRoom;
+
+    private Alarm alarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         refreshToggleButton();
     }
 
-    private void refreshToggleButton() {
+    public void refreshToggleButton() {
         int index  = MySeatFloor*3+MySeatRoom;
         select = -1;
         for(int i=0;i<12;i++){
@@ -203,7 +209,10 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 isBooked = true;
                                 if(seat[MySeatFloor*3+MySeatRoom][select] == 1){
-                                    //큐 처리
+                                    Toast.makeText(getApplication(),"대기 순번: "+queue[MySeatFloor*3+MySeatRoom][select],Toast.LENGTH_SHORT).show();
+                                    MySeatNum = select;
+                                    toggleButtons[select].setChecked(false);
+                                    select = -1;
                                 }else{
                                     seat[MySeatFloor*3+MySeatRoom][select] = 1;
                                     MySeatNum = select;
@@ -213,7 +222,9 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 Toast.makeText(getApplication(), "예약되었습니다", Toast.LENGTH_SHORT).show();
                                 buttonBook.setText("예약 취소");
-                                //라즈베리파이에 신호 보내기
+
+                                if(MySeatNum == 0 & MySeatRoom == 0 & MySeatFloor ==0)
+                                    alarm = (Alarm) new Alarm(MainActivity.this).execute("");
                             }
                         })
                         .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
@@ -233,7 +244,8 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton("네", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             isBooked=false;
-                            seat[MySeatFloor*3+MySeatRoom][MySeatNum] = 0;
+                            if(queue[MySeatFloor*3+MySeatRoom][MySeatNum] == 0)
+                                seat[MySeatFloor*3+MySeatRoom][MySeatNum] = 0;
                             MySeatNum = -1;
                             if(select!=-1) {
                                 toggleButtons[select].setChecked(false);
@@ -242,7 +254,11 @@ public class MainActivity extends AppCompatActivity {
                             refreshToggleButton();
                             Toast.makeText(getApplication(), "예약 취소되었습니다", Toast.LENGTH_SHORT).show();
                             buttonBook.setText("예약 신청");
-                            //라즈베리파이에 신호 보내기
+
+                            if(alarm!=null){
+                                alarm.setCancel(true);
+                                alarm = null;
+                            }
                         }
                     })
                     .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
@@ -282,5 +298,11 @@ public class MainActivity extends AppCompatActivity {
             toggleButtons[6].setEnabled(true);
             isSeated=false;
         }
+    }
+    public void setSeat(int i,int j,int value){
+        seat[i][j]=value;
+    }
+    public void setIsSeated(boolean isSeated){
+        this.isSeated = isSeated;
     }
 }

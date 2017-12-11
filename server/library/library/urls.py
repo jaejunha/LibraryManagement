@@ -23,6 +23,8 @@ urlpatterns = [
     url(r'^getUW', views.getUW, name='getUW'),
     url(r'^getIR', views.getIR, name='getIR'),
     url(r'^useSeat', views.useSeat, name='useSeat'),
+    url(r'^checkSeat', views.checkSeat, name='checkSeat'),
     url(r'^setTimer', views.setTimer, name='setTimer'),
+    url(r'^init', views.init, name='init'),
     url(r'^test', views.test, name='test'),
 ]

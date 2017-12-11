@@ -7,6 +7,8 @@ remain = 900
 using = 0
 
 con_web = httplib.HTTPConnection("localhost:8888")
+con_web.request("GET", "/init","",headers)
+con_web.getresponse()
 print('server is running')
 while True:
 		time.sleep(0.5)
@@ -18,6 +20,8 @@ while True:
 			if int(uw) <= 25:
 				if using == 0:
 					con_web.request("GET", "/useSeat?seat=A0&use=O","",headers)
+					con_web.getresponse()
+					con_web.request("GET", "/postSerial?con=r","",headers)
 					con_web.getresponse()
 					print 'use seat'
 					remain = 900
@@ -36,6 +40,8 @@ while True:
 					print 'remain: '+str(remain)
 					if remain == 0:
 						con_web.request("GET", "/useSeat?seat=A0&use=X","",headers)
+						con_web.getresponse()
+						con_web.request("GET", "/postSerial?con=g","",headers)
 						con_web.getresponse()
 						using = 0
 						print 'empty'
