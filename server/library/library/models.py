@@ -25,3 +25,7 @@ class Queue(models.Model):
     no = models.IntegerField()
     QueSeat = models.ForeignKey(Seat, on_delete=models.CASCADE)
     studentID = models.ForeignKey(Student, null=True)
+
+class TimeLine(models.Model):
+    no = models.IntegerField()
+    content = models.CharField(max_length=100)

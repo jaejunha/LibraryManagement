@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
@@ -46,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private ToggleButton toggleButtons[];
     private Spinner spinnerFloor, spinnerRoom;
 
+    private int studentNumber;
+
     private int timer;
 
     private Alarm alarm;
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     textName.setText(user.getName());
                     textMajor.setText(user.getMajor());
                     textNumber.setText(user.getNumber()+"");
+                    studentNumber = user.getNumber();
                 }
             }
         });
@@ -292,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void controlListener(View target) {
-        startActivity(new Intent(this, ControlActivity.class));
+        startActivity(new Intent(this, ControlActivity.class).putExtra("number",studentNumber));
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
     public void retListener(View target)

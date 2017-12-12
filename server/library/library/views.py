@@ -105,6 +105,24 @@ def getTimer(request):
 	
 	return render(request,'library/print.html',{"response":remain})
 
+def getLog(request):
+	
+	list = []
+	data = ''
+	for t in TimeLine.objects.filter().order_by('-id'):
+		list.append(str(t.no)+': '+t.content)
+	if len(list) > 0:
+		data = list[0]
+		for l in list:
+			data+='/'+l
+	return render(request,'library/print.html',{"response":data})
+
+def setLog(request):
+	number = request.GET.get('number',0)
+	con = request.GET.get('con','')
+	TimeLine(no=int(number), content=con).save()
+	return render(request,'library/print.html')
+
 def init(request):
 	seat = request.GET.get('seat','')
 	print seat

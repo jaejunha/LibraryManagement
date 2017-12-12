@@ -69,9 +69,11 @@
             android:layout_height="match_parent"
             android:background="@drawable/scroll_border_white">
             <TextView
+                android:layout_margin="5dp"
+                android:id="@+id/textLog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/lightGray"/>
+                android:textColor="@color/white"/>
         </ScrollView>
 
     </LinearLayout>
